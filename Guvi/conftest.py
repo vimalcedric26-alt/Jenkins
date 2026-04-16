@@ -1,24 +1,20 @@
-import pytest
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import pytest
 
 @pytest.fixture
 def setup():
-    options = webdriver.FirefoxOptions()
-    options.add_argument("--disable-gpu")
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Firefox(
-        service=Service(GeckoDriverManager().install()),
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()),
         options=options
     )
 
     driver.maximize_window()
-    driver.get("https://www.guvi.in")
-
-    wait = WebDriverWait(driver, 10)
-
-    yield driver, wait
-
+    yield driver
     driver.quit()

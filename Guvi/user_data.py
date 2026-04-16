@@ -1,18 +1,17 @@
 import openpyxl
+import os
 
-class ExcelData:
-    def __init__(self, filename, sheetname):
-        self.fname = filename
-        self.sheetname = sheetname
+class Excel:
+    def __init__(self):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.fname = os.path.join(base_dir, "testdata", "Excel.xlsx")
 
     def get_data(self):
         workbook = openpyxl.load_workbook(self.fname)
-        sheet = workbook[self.sheetname]
+        sheet = workbook.active
 
         data = []
-
         for row in sheet.iter_rows(min_row=2, values_only=True):
-            email, password, expected = row
-            data.append((email, password, expected))
+            data.append(row)
 
         return data

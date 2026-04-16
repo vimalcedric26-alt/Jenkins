@@ -3,12 +3,10 @@ name: Run Selenium Tests
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-  workflow_dispatch:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -23,20 +21,12 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Install Allure
+    - name: Run tests
       run: |
-        npm install -g allure-commandline
+        pytest --alluredir=allure-results
 
-    - name: Run Tests
-      run: |
-        pytest Guvi/tests -v --alluredir=allure-results
-
-    - name: Generate Allure Report
-      run: |
-        allure generate allure-results -o allure-report --clean
-
-    - name: Upload Report
+    - name: Upload Allure results
       uses: actions/upload-artifact@v4
       with:
-        name: allure-report
-        path: allure-report
+        name: allure-results
+        path: allure-results
