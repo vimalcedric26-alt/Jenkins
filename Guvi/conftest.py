@@ -3,12 +3,17 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 
 @pytest.fixture
 def setup():
-    options = Options()
-    options.add_argument("--disable-infobars")
-    options.add_argument("--disable-geolocation")
+    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
+    options = webdriver.FirefoxOptions()
+
+    options.add_argument("--headless")
+
+
 
     driver = webdriver.Firefox()
     driver.get("https://www.guvi.in/")
