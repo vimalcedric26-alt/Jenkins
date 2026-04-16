@@ -6,8 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 @pytest.fixture
 def setup():
-    options = webdriver.FirefoxOptions()   # ✅ DEFINE OPTIONS
-    options.add_argument("--headless")     # ✅ REQUIRED for CI
+    options = webdriver.FirefoxOptions()
     options.add_argument("--disable-gpu")
 
     driver = webdriver.Firefox(
