@@ -1,26 +1,24 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
 
 @pytest.fixture
 def setup():
-    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
-    options = webdriver.FirefoxOptions()
+    options = webdriver.FirefoxOptions()   # ✅ DEFINE OPTIONS
+    options.add_argument("--headless")     # ✅ REQUIRED for CI
+    options.add_argument("--disable-gpu")
 
-    options.add_argument("--headless")
+    driver = webdriver.Firefox(
+        service=Service(GeckoDriverManager().install()),
+        options=options
+    )
 
-
-
-    driver = webdriver.Firefox()
-    driver.get("https://www.guvi.in/")
     driver.maximize_window()
+    driver.get("https://www.guvi.in")
 
-    wait = WebDriverWait(driver, 15)
-
+    wait = WebDriverWait(driver, 10)
 
     yield driver, wait
 
