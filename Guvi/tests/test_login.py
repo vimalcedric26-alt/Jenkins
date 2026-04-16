@@ -1,8 +1,8 @@
 from Guvi.pages.login import LoginPage
-from Guvi.user_data import ExcelData
+from Guvi.user_data import Excel
 import pytest
 
-excel = ExcelData(
+excel = Excel(
         "Guvi/testdata/Guvi_excel.xlsx",
         "user_data"
     )
